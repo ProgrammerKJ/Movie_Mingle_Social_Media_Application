@@ -35,7 +35,7 @@ Ensure you have the following installed:
 
    ```bash
    git clone https://github.com/ProgrammerKJ/Movie_Mingle_Social_Media_Application.git
-   cd Both_Client&Backend
+   cd BothClientAndBackend
 
 2. **Backend Setup:**
 
