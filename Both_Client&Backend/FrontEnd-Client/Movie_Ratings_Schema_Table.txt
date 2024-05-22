@@ -1,0 +1,203 @@
+Table: Users
+- user_id (Primary Key)
+- username
+- email
+- password_hash
+- created_at
+
+Table: Movies
+- movie_id (Primary Key)
+- title
+- release_year
+- genre
+- imdb_rating
+- director
+- description
+
+Table: Ratings
+- rating_id (Primary Key)
+- user_id (Foreign Key referencing Users)
+- movie_id (Foreign Key referencing Movies)
+- user_rating
+- user_review
+- created_at
+
+Table: Watchlist
+- watchlist_id (Primary Key)
+- user_id (Foreign Key referencing Users)
+- movie_id (Foreign Key referencing Movies)
+- added_at
+
+Table: Friends
+- friendship_id (Primary Key)
+- user_id (Foreign Key referencing Users)
+- friend_id (Foreign Key referencing Users)
+- status (e.g., pending, accepted, declined)
+
+Table: ActivityFeed
+- activity_id (Primary Key)
+- user_id (Foreign Key referencing Users)
+- activity_type (e.g., rated_movie, added_to_watchlist, became_friends)
+- target_id (Foreign Key referencing relevant entity based on activity_type)
+- timestamp
+
+Table: Recommendations
+- recommendation_id (Primary Key)
+- user_id (Foreign Key referencing Users)
+- movie_id (Foreign Key referencing Movies)
+- recommendation_score
+
+Table: Notifications
+- notification_id (Primary Key)
+- user_id (Foreign Key referencing Users)
+- content
+- timestamp
+- status (read/unread)
+
+Table: UserPreferences
+- user_id (Primary Key, Foreign Key referencing Users)
+- preferred_genres
+- notification_settings
+- language_preferences
+
+Table: Favorites
+- favorite_id (Primary Key)
+- user_id (Foreign Key referencing Users)
+- movie_id (Foreign Key referencing Movies)
+
+Table: MovieTags
+- tag_id (Primary Key)
+- tag_name
+
+Table: Genres
+- genre_id (Primary Key)
+- genre_name
+
+Table: MovieGenres
+- movie_id (Foreign Key referencing Movies)
+- genre_id (Foreign Key referencing Genres)
+
+Table: WatchHistory
+- history_id (Primary Key)
+- user_id (Foreign Key referencing Users)
+- movie_id (Foreign Key referencing Movies)
+- watched_at
+
+Table: AdvancedRecommendations
+- recommendation_id (Primary Key)
+- user_id (Foreign Key referencing Users)
+- movie_id (Foreign Key referencing Movies)
+- recommendation_score
+
+Table: UserStatistics
+- user_id (Primary Key, Foreign Key referencing Users)
+- total_ratings
+- average_rating
+- highest_rated_movie
+- most_watched_genre
+
+
+
+CROWS FOOT IMAGE
+
+
++---------------------+          +---------------------+
+|       Users         |          |       Movies        |
+|---------------------|          |---------------------|
+| PK: user_id         |1       *| PK: movie_id        |
+| username            |----------| title               |
+| email               |          | release_year        |
+| password_hash       |          | genre               |
+| created_at          |          | imdb_rating         |
++---------------------+          | director            |
+                                 | description         |
+                                 +---------------------+
+                                          |
++---------------------+          +---------------------+
+|       Ratings       |          |      Watchlist      |
+|---------------------|          |---------------------|
+| PK: rating_id       |          | PK: watchlist_id    |
+| FK: user_id         |----------| FK: user_id         |
+| FK: movie_id        |          | FK: movie_id        |
+| user_rating         |          | added_at            |
+| user_review         |          +---------------------+
+| created_at          |
++---------------------+            +---------------------+
+                |                 |        Friends      |
+                |                 |---------------------|
+                |----------*      | PK: friendship_id   |
+                |                 | FK: user_id         |
+                |                 | FK: friend_id       |
+                |                 | status              |
+                |                 +---------------------+
+                |
++---------------------+            +---------------------+
+|   ActivityFeed      |            |    Recommendations  |
+|---------------------|            |---------------------|
+| PK: activity_id     |            | PK: recommendation_id|
+| FK: user_id         |------------| FK: user_id         |
+| activity_type       |            | FK: movie_id        |
+| FK: target_id       |            | recommendation_score|
+| timestamp           |            +---------------------+
++---------------------+
+                |
++---------------------+            +---------------------+
+|  Notifications      |            | UserPreferences     |
+|---------------------|            |---------------------|
+| PK: notification_id |            | PK: user_id         |
+| FK: user_id         |------------| preferred_genres    |
+| content             |            | notification_settings|
+| timestamp           |            | language_preferences|
+| status              |            +---------------------+
++---------------------+
+                |
++---------------------+            +---------------------+
+|      Favorites      |            |      MovieTags      |
+|---------------------|            |---------------------|
+| PK: favorite_id     |            | PK: tag_id          |
+| FK: user_id         |------------| tag_name            |
+| FK: movie_id        |            +---------------------+
++---------------------+
+                |
++---------------------+
+|      Genres         |
+|---------------------|
+| PK: genre_id        |
+| genre_name          |
++---------------------+
+                |
++---------------------+
+|    MovieGenres      |
+|---------------------|
+| FK: movie_id        |
+| FK: genre_id        |
++---------------------+
+                |
++---------------------+
+|    WatchHistory     |
+|---------------------|
+| PK: history_id      |
+| FK: user_id         |
+| FK: movie_id        |
+| watched_at          |
++---------------------+
+                |
++---------------------+
+| AdvancedRecommendations|
+|------------------------|
+| PK: recommendation_id  |
+| FK: user_id            |
+| FK: movie_id           |
+| recommendation_score  |
++------------------------+
+                |
++---------------------+
+|   UserStatistics    |
+|---------------------|
+| PK: user_id         |
+| total_ratings       |
+| average_rating      |
+| highest_rated_movie |
+| most_watched_genre  |
++---------------------+
+
